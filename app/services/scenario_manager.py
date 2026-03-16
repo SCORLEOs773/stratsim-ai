@@ -1,6 +1,7 @@
 from app.models.scenario_types import ScenarioType
 from app.services.simulation_engine import price_simulation, marketing_simulation
 from app.services.monte_carlo_engine import run_price_monte_carlo
+from app.services.database_service import save_simulation
 
 def run_scenario(scenario_type, data):
 
@@ -21,6 +22,8 @@ def run_scenario(scenario_type, data):
         )
 
         result["risk_simulation"] = risk_simulation
+        
+        save_simulation(scenario_type, data, result)
 
         return result
 
@@ -32,4 +35,4 @@ def run_scenario(scenario_type, data):
             data["revenue_per_customer"]
         )
 
-    return {"error": "Scenario not implemented yet"}
+    return {"error": "Scenario not implemented yet"}    

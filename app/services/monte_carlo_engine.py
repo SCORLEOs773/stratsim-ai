@@ -33,8 +33,9 @@ def run_price_monte_carlo(
     probability_increase = sum(1 for r in revenues if r > users * current_price) / simulations
 
     return {
-        "expected_revenue": expected_revenue,
-        "best_case": best_case,
-        "worst_case": worst_case,
-        "probability_revenue_increase": probability_increase
+    "expected_revenue": expected_revenue,
+    "best_case": best_case,
+    "worst_case": worst_case,
+    "probability_revenue_increase": probability_increase,
+    "revenue_distribution": revenues
     }

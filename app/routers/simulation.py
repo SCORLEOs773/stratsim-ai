@@ -5,6 +5,8 @@ from app.services.ai_engine import generate_strategy_analysis
 from app.models.strategy_request import StrategyComparisonRequest
 from app.services.strategy_engine import compare_strategies
 from app.services.strategy_engine import generate_strategy_recommendation
+from app.services.visualization_engine import generate_revenue_distribution, generate_histogram_data
+from app.services.monte_carlo_engine import run_price_monte_carlo
 
 router = APIRouter(
     prefix="/simulation",
@@ -36,4 +38,24 @@ def compare_business_strategies(request: StrategyComparisonRequest):
     return {
         "strategy_ranking": ranked,
         "recommendation": recommendation
+    }
+    
+@router.post("/visualize/price-risk")
+def visualize_price_risk(data: dict):
+
+    result = run_price_monte_carlo(
+        data["current_price"],
+        data["new_price"],
+        data["users"],
+        data["churn_rate"]
+    )
+
+    revenues = result["revenue_distribution"]
+
+    distribution = generate_revenue_distribution(revenues)
+    histogram = generate_histogram_data(revenues)
+
+    return {
+        "distribution_summary": distribution,
+        "histogram": histogram
     }

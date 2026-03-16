@@ -20,3 +20,9 @@ Thumbs.db
 
 # FastAPI cache
 *.sqlite3
+
+# Database files    
+stratsim.db
+__pycache__/
+*.pyc
+venv/
