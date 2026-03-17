@@ -46,8 +46,10 @@ def marketing_simulation(current_budget, new_budget, customer_acquisition_cost, 
     roi = (additional_revenue - additional_budget) / additional_budget
 
     return {
-        "additional_budget": additional_budget,
-        "new_customers_acquired": new_customers,
-        "additional_revenue": additional_revenue,
-        "roi": roi
-    }
+    "additional_budget": additional_budget,
+    "new_customers_acquired": new_customers,
+    "additional_revenue": additional_revenue,
+    "roi": roi,
+    "customer_acquisition_cost": customer_acquisition_cost,
+    "revenue_per_customer": revenue_per_customer
+}
