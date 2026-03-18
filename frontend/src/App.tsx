@@ -1,4 +1,5 @@
 import { useState } from "react";
+import ReactMarkdown from "react-markdown";
 
 type ScenarioType = "price_change" | "marketing_spend";
 
@@ -67,6 +68,7 @@ function App() {
 
       const json: SimulationResponse = await res.json();
       setResult(json);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       setError(err.message);
     } finally {
@@ -95,7 +97,7 @@ function App() {
             textAlign: "center",
           }}
         >
-          <h1>Strategic Simulation</h1>
+          <h1 style={{ color: "black" }}>Strategic Simulation</h1>
           <p style={{ color: "#666" }}>
             Analyze business decisions with AI insights
           </p>
@@ -112,7 +114,9 @@ function App() {
             marginBottom: "2rem",
           }}
         >
-          <h2 style={{ marginBottom: "1rem" }}>Scenario Configuration</h2>
+          <h2 style={{ marginBottom: "1rem", color: "black" }}>
+            Scenario Configuration
+          </h2>
 
           {/* Scenario Box */}
           <div
@@ -274,7 +278,7 @@ function App() {
                 boxShadow: "0 3px 10px rgba(0,0,0,0.08)",
               }}
             >
-              <h2>Simulation Results</h2>
+              <h2 style={{ color: "black" }}>Simulation Results</h2>
 
               <div
                 style={{
@@ -296,7 +300,7 @@ function App() {
                       }}
                     >
                       <div style={{ fontSize: "0.85rem", color: "#666" }}>
-                        {key.replace(/_/g, " ")}
+                        {key.replace(/_/g, " ").toUpperCase()}
                       </div>
                       <div style={{ fontWeight: 600 }}>{String(value)}</div>
                     </div>
@@ -325,9 +329,54 @@ function App() {
                   lineHeight: "1.6",
                 }}
               >
-                {result.ai_analysis.split("\n").map((line, idx) => (
-                  <p key={idx}>{line}</p>
-                ))}
+                <ReactMarkdown
+                  components={{
+                    h1: ({ children }) => (
+                      <h1 style={{ fontSize: "1.5rem", fontWeight: 700 }}>
+                        {children}
+                      </h1>
+                    ),
+                    h2: ({ children }) => (
+                      <h2 style={{ fontSize: "1.3rem", fontWeight: 600 }}>
+                        {children}
+                      </h2>
+                    ),
+                    h3: ({ children }) => (
+                      <h3 style={{ fontSize: "1.1rem", fontWeight: 600 }}>
+                        {children}
+                      </h3>
+                    ),
+
+                    // ✅ THIS is where your "premium" tweaks go
+                    p: ({ children }) => (
+                      <p style={{ marginBottom: "0.8rem", color: "#333" }}>
+                        {children}
+                      </p>
+                    ),
+
+                    ul: ({ children }) => (
+                      <ul
+                        style={{ paddingLeft: "1rem", marginBottom: "0.5rem" }}
+                      >
+                        {children}
+                      </ul>
+                    ),
+
+                    li: ({ children }) => (
+                      <li style={{ marginBottom: "0.3rem" }}>• {children}</li>
+                    ),
+
+                    strong: ({ children }) => (
+                      <strong style={{ fontWeight: 700 }}>{children}</strong>
+                    ),
+
+                    em: ({ children }) => (
+                      <em style={{ fontStyle: "italic" }}>{children}</em>
+                    ),
+                  }}
+                >
+                  {result.ai_analysis}
+                </ReactMarkdown>
               </div>
             </div>
           </>
