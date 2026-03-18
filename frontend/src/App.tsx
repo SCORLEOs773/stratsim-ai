@@ -318,7 +318,7 @@ function App() {
                 boxShadow: "0 3px 10px rgba(0,0,0,0.08)",
               }}
             >
-              <h2>AI Analysis</h2>
+              <h2 style={{ color: "black" }}>AI Analysis</h2>
 
               <div
                 style={{
