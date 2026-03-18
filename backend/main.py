@@ -11,21 +11,18 @@ load_dotenv()
 
 app = FastAPI(title="StratSim AI")
 
+# ✅ ADD CORS HERE
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+    "https://stratsim.netlify.app/"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)   
+
 app.include_router(simulation.router)
 
 @app.get("/")
 def root():
     return {"message": "StratSim AI backend is running"}
-
-origins = [
-    "http://localhost:5173",  # your Vite frontend URL
-    "http://127.0.0.1:5173"
-]
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=origins,  # or ["*"] to allow all
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
