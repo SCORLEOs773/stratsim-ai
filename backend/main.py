@@ -15,7 +15,7 @@ app = FastAPI(title="StratSim AI")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-    "https://stratsim.netlify.app/"],
+    "https://stratsim.netlify.app"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
