@@ -56,11 +56,14 @@ function App() {
         : { scenario_type: scenarioType, data: marketingData };
 
     try {
-      const res = await fetch("http://127.0.0.1:8000/simulation/run", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
+      const res = await fetch(
+        "https://stratsim-ai.onrender.com/simulation/run",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        },
+      );
 
       if (!res.ok) {
         throw new Error(`Server responded with status ${res.status}`);
