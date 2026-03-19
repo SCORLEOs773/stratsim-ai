@@ -21,7 +21,11 @@ def run_simulation(request: ScenarioRequest):
         request.data
     )
 
-    ai_analysis = generate_strategy_analysis(result)
+    ai_analysis = generate_strategy_analysis(
+    result,
+    request.company_name,
+    request.industry
+    )
 
     return {
         "simulation_result": result,
