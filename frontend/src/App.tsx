@@ -26,6 +26,9 @@ function App() {
   const [scenarioType, setScenarioType] =
     useState<ScenarioType>("price_change");
 
+  const [companyName, setCompanyName] = useState("");
+  const [industry, setIndustry] = useState("");
+
   const [priceData, setPriceData] = useState<PriceChangeData>({
     current_price: 20,
     new_price: 25,
@@ -52,12 +55,23 @@ function App() {
 
     const payload =
       scenarioType === "price_change"
-        ? { scenario_type: scenarioType, data: priceData }
-        : { scenario_type: scenarioType, data: marketingData };
+        ? {
+            scenario_type: scenarioType,
+            company_name: companyName,
+            industry: industry,
+            data: priceData,
+          }
+        : {
+            scenario_type: scenarioType,
+            company_name: companyName,
+            industry: industry,
+            data: marketingData,
+          };
 
     try {
       const res = await fetch(
         "https://stratsim-ai.onrender.com/simulation/run",
+        // "http://127.0.0.1:8000/simulation/run",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -117,6 +131,59 @@ function App() {
             marginBottom: "2rem",
           }}
         >
+          {/* BUSINESS CONTEXT */}
+          <div
+            style={{
+              background: "#f9fafb",
+              padding: "1rem",
+              borderRadius: "8px",
+              marginBottom: "1rem",
+              border: "1px solid #eee",
+            }}
+          >
+            <h3 style={{ marginBottom: "0.8rem" }}>Business Context</h3>
+
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr",
+                gap: "1rem",
+              }}
+            >
+              <div>
+                <label>Company Name</label>
+                <input
+                  value={companyName}
+                  onChange={(e) => setCompanyName(e.target.value)}
+                  placeholder="e.g. Britannia"
+                  style={{
+                    width: "100%",
+                    padding: "0.5rem",
+                    marginTop: "0.3rem",
+                    borderRadius: "6px",
+                    border: "1px solid #ccc",
+                  }}
+                />
+              </div>
+
+              <div>
+                <label>Industry</label>
+                <input
+                  value={industry}
+                  onChange={(e) => setIndustry(e.target.value)}
+                  placeholder="e.g. FMCG - Biscuits"
+                  style={{
+                    width: "100%",
+                    padding: "0.5rem",
+                    marginTop: "0.3rem",
+                    borderRadius: "6px",
+                    border: "1px solid #ccc",
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+
           <h2 style={{ marginBottom: "1rem", color: "black" }}>
             Scenario Configuration
           </h2>
